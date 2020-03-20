@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "mcf-reap",
+  "version": "${version}",
+  "name": "MaxVar reap for fabric",
+  "description": "MaxVar reap for fabric - right-click on a fully grown plant to harvest and reseed",
+  "authors": [
+    "max@maxvar.ru"
+  ],
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/maxvar-reap-for-fabric",
+    "sources": "https://github.com/maxvar/mcf-reap"
+  },
+  "license": "DWTFUW",
+  "icon": "assets/mcf-reap/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "ru.maxvar.mcf.reap.ModKt::init"
+    ]
+  },
+  "mixins": [
+    "mcf-reap.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.7.1",
+    "fabric": "*",
+    "fabric-language-kotlin": "*",
+    "minecraft": "1.15.x"
+  },
+  "suggests": {
+    "flamingo": "*"
+  }
+}
