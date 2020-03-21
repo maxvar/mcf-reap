@@ -47,13 +47,10 @@ public abstract class CropBlockMixin extends PlantBlock {
 
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        System.out.println("got into modded onUse");
         if (!world.isClient() & isMature(state)) {
             List<ItemStack> dropList = getDroppedStacks(state, (ServerWorld) world, pos, null, player, player.getStackInHand(hand));
             DefaultedList<ItemStack> drops = DefaultedList.of();
-            for (ItemStack stack : dropList) {
-                drops.add(stack);
-            }
+            drops.addAll(dropList);
 
             for (ItemStack stack : drops) {
                 if (stack.getItem() == this.getSeedsItem()) {
