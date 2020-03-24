@@ -4,6 +4,7 @@
   "package": "ru.maxvar.mcf.reap.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "NetherWartBlockMixin",
     "CocoaBlockMixin",
     "CropBlockMixin"
   ],
