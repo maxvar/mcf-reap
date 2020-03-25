@@ -16,7 +16,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "ru.maxvar.mcf.reap.ModKt::init"
+      "ru.maxvar.mcf.reap.Mod"
     ]
   },
   "mixins": [
@@ -25,7 +25,6 @@
   "depends": {
     "fabricloader": ">=0.7.1",
     "fabric": "*",
-    "fabric-language-kotlin": "*",
     "minecraft": "1.15.x"
   },
   "suggests": {
