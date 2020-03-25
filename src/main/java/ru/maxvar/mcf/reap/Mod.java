@@ -2,6 +2,7 @@ package ru.maxvar.mcf.reap;
 
 import net.fabricmc.api.ModInitializer;
 
+@SuppressWarnings("unused")
 public class Mod implements ModInitializer {
     static final String MOD_ID = "mcf-reap";
 
