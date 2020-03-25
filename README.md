@@ -7,6 +7,9 @@ Right-click on a fully grown plant to harvest and reseed automatically.
 Works on wheat, beetroot, carrots and potatoes and cocoa.
 
 #### Change history
+
+1.2.1 remove dependency on fabric-language-kotlin
+ 
 1.2.0 added harvesting of nether wart
 
 1.1.0 added harvesting of cocoa beans
