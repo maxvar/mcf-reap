@@ -39,7 +39,6 @@ public abstract class NetherWartBlockMixin extends PlantBlock {
             List<ItemStack> dropList = getDroppedStacks(state, (ServerWorld) world, pos, null, player, player.getStackInHand(hand));
             DefaultedList<ItemStack> drops = DefaultedList.of();
             drops.addAll(dropList);
-
             for (ItemStack stack : drops) {
                 if (stack.getItem() == Items.NETHER_WART) {
                     ItemStack seedStack = stack.copy();
@@ -49,10 +48,10 @@ public abstract class NetherWartBlockMixin extends PlantBlock {
                     break;
                 }
             }
-
             world.setBlockState(pos, state.with(AGE, 0));
             ItemScatterer.spawn(world, pos, drops);
         }
+        player.swingHand(hand, true);
         return super.onUse(state, world, pos, player, hand, hit);
     }
 

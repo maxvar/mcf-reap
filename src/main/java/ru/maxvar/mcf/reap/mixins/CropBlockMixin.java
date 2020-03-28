@@ -4,9 +4,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
@@ -18,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import ru.maxvar.mcf.reap.CropsInfo;
 
 import java.util.List;
 
@@ -37,13 +36,6 @@ public abstract class CropBlockMixin extends PlantBlock {
         return true;
     }
 
-    @SuppressWarnings("SameReturnValue")
-    @Shadow
-    protected ItemConvertible getSeedsItem() {
-        return Items.DIAMOND_BLOCK;
-    }
-
-    @SuppressWarnings("SameReturnValue")
     @Shadow
     public IntProperty getAgeProperty() {
         return AGE;
@@ -58,7 +50,7 @@ public abstract class CropBlockMixin extends PlantBlock {
             drops.addAll(dropList);
 
             for (ItemStack stack : drops) {
-                if (stack.getItem() == this.getSeedsItem()) {
+                if (stack.getItem() == CropsInfo.getSeedsItem(this)) {
                     ItemStack seedStack = stack.copy();
                     drops.remove(stack);
                     seedStack.decrement(1);
@@ -70,6 +62,7 @@ public abstract class CropBlockMixin extends PlantBlock {
             world.setBlockState(pos, state.with(this.getAgeProperty(), 0));
             ItemScatterer.spawn(world, pos, drops);
         }
+        player.swingHand(hand, true);
         return super.onUse(state, world, pos, player, hand, hit);
     }
 
