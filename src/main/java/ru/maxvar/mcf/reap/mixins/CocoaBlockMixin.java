@@ -48,8 +48,8 @@ public abstract class CocoaBlockMixin extends HorizontalFacingBlock {
             }
             world.setBlockState(pos, state.with(CocoaBlock.AGE, 0));
             ItemScatterer.spawn(world, pos, drops);
+            return ActionResult.SUCCESS;
         }
-        player.swingHand(hand, true);
         return super.onUse(state, world, pos, player, hand, hit);
     }
 

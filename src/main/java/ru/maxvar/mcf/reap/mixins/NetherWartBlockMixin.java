@@ -50,8 +50,8 @@ public abstract class NetherWartBlockMixin extends PlantBlock {
             }
             world.setBlockState(pos, state.with(AGE, 0));
             ItemScatterer.spawn(world, pos, drops);
+            return ActionResult.SUCCESS;
         }
-        player.swingHand(hand, true);
         return super.onUse(state, world, pos, player, hand, hit);
     }
 
