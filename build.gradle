@@ -61,6 +61,11 @@ task sourcesJar(type: Jar, dependsOn: classes) {
 
 jar {
     from "LICENSE"
+    archiveVersion = project.version + "-" + minecraft_version
+}
+
+remapJar {
+    archiveVersion = project.version + "-" + minecraft_version
 }
 
 // configure the maven publication
