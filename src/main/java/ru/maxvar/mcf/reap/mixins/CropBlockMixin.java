@@ -36,6 +36,7 @@ public abstract class CropBlockMixin extends PlantBlock {
         return true;
     }
 
+    @SuppressWarnings("SameReturnValue")
     @Shadow
     public IntProperty getAgeProperty() {
         return AGE;

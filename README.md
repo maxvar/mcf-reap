@@ -8,6 +8,8 @@ Works on wheat, beetroot, carrots and potatoes and cocoa.
 
 #### Change history
 
+1.4.0 reserved for new plants 
+
 1.3.1-16s updated for 20w16a and retested, fixed "hand swinging" after harvest
 
 1.3.1 updated deps for 15.2 and retested, properly fixed "hand swinging" after harvest
