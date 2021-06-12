@@ -23,11 +23,8 @@
     "mcf-reap.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.10.7",
+    "fabricloader": ">=0.11.3",
     "fabric": "*",
-    "minecraft": "1.16.x"
-  },
-  "suggests": {
-    "flamingo": "*"
+    "minecraft": "1.17.x"
   }
 }
