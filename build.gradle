@@ -31,15 +31,15 @@ processResources {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = "UTF-8"
-    options.release = 16
-}
-
-java {
-	withSourcesJar()
+    options.release.set(16)
 }
 
 jar {
     from "LICENSE"
     from "README.md"
+    archiveVersion.set(project.version + "-" + minecraft_version)
+}
+
+remapJar {
     archiveVersion = project.version + "-" + minecraft_version
 }
