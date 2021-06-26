@@ -5,6 +5,7 @@ import net.minecraft.block.CropBlock;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
@@ -40,7 +41,7 @@ public abstract class CropBlockMixin extends PlantBlock {
 
     @SuppressWarnings("SameReturnValue")
     @Shadow
-    public Item getSeedsItem() {
+    public ItemConvertible getSeedsItem() {
         return Items.WHEAT_SEEDS;
     }
 
@@ -48,7 +49,7 @@ public abstract class CropBlockMixin extends PlantBlock {
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if (!world.isClient() & isMature(state)) {
-            return ReapHelper.reap(state, world, pos, player, hand, getSeedsItem(), getAgeProperty());
+            return ReapHelper.reap(state, world, pos, player, hand, getSeedsItem().asItem(), getAgeProperty());
         }
         return super.onUse(state, world, pos, player, hand, hit);
     }
