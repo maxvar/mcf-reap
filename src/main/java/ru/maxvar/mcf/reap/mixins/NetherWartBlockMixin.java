@@ -5,6 +5,7 @@ import net.minecraft.block.NetherWartBlock;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.ActionResult;
@@ -30,9 +31,13 @@ public abstract class NetherWartBlockMixin extends PlantBlock {
     @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient() & state.get(AGE) >= 3) {
-            return ReapHelper.reap(state, world, pos, player, hand, Items.NETHER_WART, AGE);
-        }
+        if (state.get(AGE) >= 3)
+            if (world.isClient()) {
+                player.playSound(SoundEvents.ITEM_CROP_PLANT, 1.0f, 1.0f);
+                return ActionResult.SUCCESS;
+            } else {
+                return ReapHelper.reap(state, world, pos, player, hand, Items.NETHER_WART, AGE);
+            }
         return super.onUse(state, world, pos, player, hand, hit);
     }
 

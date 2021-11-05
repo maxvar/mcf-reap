@@ -5,6 +5,7 @@ import net.minecraft.block.CocoaBlock;
 import net.minecraft.block.HorizontalFacingBlock;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Items;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -24,9 +25,13 @@ public abstract class CocoaBlockMixin extends HorizontalFacingBlock {
     @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient() & state.get(CocoaBlock.AGE) >= 2) {
-            return ReapHelper.reap(state, world, pos, player, hand, Items.COCOA_BEANS, CocoaBlock.AGE);
-        }
+        if (state.get(CocoaBlock.AGE) >= 2)
+            if (world.isClient()) {
+                player.playSound(SoundEvents.ITEM_CROP_PLANT, 1.0f, 1.0f);
+                return ActionResult.SUCCESS;
+            } else {
+                return ReapHelper.reap(state, world, pos, player, hand, Items.COCOA_BEANS, CocoaBlock.AGE);
+            }
         return super.onUse(state, world, pos, player, hand, hit);
     }
 
