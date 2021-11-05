@@ -4,21 +4,19 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.server.world.ServerWorld;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.Items;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ItemScatterer;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import ru.maxvar.mcf.reap.CropsInfo;
-
-import java.util.List;
+import ru.maxvar.mcf.reap.ReapHelper;
 
 import static net.minecraft.block.CropBlock.AGE;
 
@@ -30,7 +28,7 @@ public abstract class CropBlockMixin extends PlantBlock {
         super(settings);
     }
 
-    @SuppressWarnings({"SameReturnValue", "unused"})
+    @SuppressWarnings("SameReturnValue")
     @Shadow
     public boolean isMature(BlockState state) {
         return true;
@@ -42,28 +40,22 @@ public abstract class CropBlockMixin extends PlantBlock {
         return AGE;
     }
 
+    @SuppressWarnings("SameReturnValue")
+    @Shadow
+    public ItemConvertible getSeedsItem() {
+        return Items.WHEAT_SEEDS;
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (!world.isClient() & isMature(state)) {
-            List<ItemStack> dropList = getDroppedStacks(state, (ServerWorld) world, pos, null, player, player.getStackInHand(hand));
-            DefaultedList<ItemStack> drops = DefaultedList.of();
-            drops.addAll(dropList);
-
-            for (ItemStack stack : drops) {
-                if (stack.getItem() == CropsInfo.getSeedsItem(this)) {
-                    ItemStack seedStack = stack.copy();
-                    drops.remove(stack);
-                    seedStack.decrement(1);
-                    drops.add(seedStack);
-                    break;
-                }
+        if (isMature(state))
+            if (world.isClient()) {
+                player.playSound(SoundEvents.ITEM_CROP_PLANT, 1.0f, 1.0f);
+                return ActionResult.SUCCESS;
+            } else {
+                return ReapHelper.reap(state, world, pos, player, hand, getSeedsItem().asItem(), getAgeProperty());
             }
-
-            world.setBlockState(pos, state.with(this.getAgeProperty(), 0));
-            ItemScatterer.spawn(world, pos, drops);
-            return ActionResult.SUCCESS;
-        }
         return super.onUse(state, world, pos, player, hand, hit);
     }
 

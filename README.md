@@ -8,6 +8,10 @@ Works on wheat, beetroot, carrots and potatoes and cocoa.
 
 #### Change history
 
+1.6.0 plays crop-planting sound when reaping (credits go to Qendolin for the proposal)
+
+1.5.0 collects crops into player's inventory
+
 1.4.0 reserved for new plants 
 
 1.3.1-16s updated for 20w16a and retested, fixed "hand swinging" after harvest
