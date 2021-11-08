@@ -17,6 +17,9 @@
   "entrypoints": {
     "main": [
       "ru.maxvar.mcf.reap.Mod"
+    ],
+    "modmenu": [
+      "ru.maxvar.mcf.reap.menu.ModMenuIntegration"
     ]
   },
   "mixins": [

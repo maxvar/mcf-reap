@@ -4,11 +4,14 @@ Inspired by https://www.curseforge.com/minecraft/mc-mods/reap-mod
 
 Right-click on a fully grown plant to harvest and reseed automatically.
 
-Works on wheat, beetroot, carrots and potatoes and cocoa.
+Works on wheat, beetroot, carrots and potatoes, cocoa, nether wart.
 
 #### Change history
 
+1.7.0 added config screen to enable/disable reaping, direct collection to inventory and planting sound  
+
 1.6.0 plays crop-planting sound when reaping (credits go to Qendolin for the proposal)
+
 1.5.0 collects crops into player's inventory
 
 1.4.0 reserved for new plants 

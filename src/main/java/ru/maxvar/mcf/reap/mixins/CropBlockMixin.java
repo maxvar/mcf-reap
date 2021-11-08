@@ -4,7 +4,6 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.CropBlock;
 import net.minecraft.block.PlantBlock;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.Items;
 import net.minecraft.sound.SoundEvents;
@@ -17,6 +16,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import ru.maxvar.mcf.reap.ReapHelper;
+import ru.maxvar.mcf.reap.menu.ConfigManager;
 
 import static net.minecraft.block.CropBlock.AGE;
 
@@ -24,13 +24,13 @@ import static net.minecraft.block.CropBlock.AGE;
 @Mixin(CropBlock.class)
 public abstract class CropBlockMixin extends PlantBlock {
 
-    protected CropBlockMixin(Settings settings) {
+    protected CropBlockMixin(final Settings settings) {
         super(settings);
     }
 
     @SuppressWarnings("SameReturnValue")
     @Shadow
-    public boolean isMature(BlockState state) {
+    public boolean isMature(final BlockState state) {
         return true;
     }
 
@@ -48,14 +48,18 @@ public abstract class CropBlockMixin extends PlantBlock {
 
     @SuppressWarnings("deprecation")
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (isMature(state))
-            if (world.isClient()) {
-                player.playSound(SoundEvents.ITEM_CROP_PLANT, 1.0f, 1.0f);
-                return ActionResult.SUCCESS;
-            } else {
-                return ReapHelper.reap(state, world, pos, player, hand, getSeedsItem().asItem(), getAgeProperty());
+    public ActionResult onUse(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockHitResult hit) {
+        if (ConfigManager.getConfig().isEnabled()) {
+            if (isMature(state)) {
+                if (world.isClient()) {
+                    if (ConfigManager.getConfig().mustPlaySound())
+                        player.playSound(SoundEvents.ITEM_CROP_PLANT, 1.0f, 1.0f);
+                    return super.onUse(state, world, pos, player, hand, hit);
+                } else {
+                    return ReapHelper.reap(state, world, pos, player, hand, getSeedsItem().asItem(), getAgeProperty());
+                }
             }
+        }
         return super.onUse(state, world, pos, player, hand, hit);
     }
 
