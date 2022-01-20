@@ -17,17 +17,17 @@
   "entrypoints": {
     "main": [
       "ru.maxvar.mcf.reap.Mod"
+    ],
+    "modmenu": [
+      "ru.maxvar.mcf.reap.menu.ModMenuIntegration"
     ]
   },
   "mixins": [
     "mcf-reap.mixins.json"
   ],
   "depends": {
-    "fabricloader": ">=0.12.5",
+    "fabricloader": ">=0.12.12",
     "fabric": "*",
     "minecraft": "1.16.5"
-  },
-  "suggests": {
-    "flamingo": "*"
   }
 }

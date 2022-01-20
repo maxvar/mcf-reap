@@ -16,12 +16,13 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import ru.maxvar.mcf.reap.ReapHelper;
+import ru.maxvar.mcf.reap.menu.ConfigManager;
 
 @SuppressWarnings("unused")
 @Mixin(NetherWartBlock.class)
 public abstract class NetherWartBlockMixin extends PlantBlock {
 
-    protected NetherWartBlockMixin(Settings settings) {
+    protected NetherWartBlockMixin(final Settings settings) {
         super(settings);
     }
 
@@ -30,14 +31,18 @@ public abstract class NetherWartBlockMixin extends PlantBlock {
 
     @SuppressWarnings("deprecation")
     @Override
-    public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
-        if (state.get(AGE) >= 3)
-            if (world.isClient()) {
-                player.playSound(SoundEvents.ITEM_CROP_PLANT, 1.0f, 1.0f);
-                return ActionResult.SUCCESS;
-            } else {
-                return ReapHelper.reap(state, world, pos, player, hand, Items.NETHER_WART, AGE);
+    public ActionResult onUse(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockHitResult hit) {
+        if (ConfigManager.getConfig().isEnabled()) {
+            if (state.get(AGE) >= 3) {
+                if (world.isClient()) {
+                    if (ConfigManager.getConfig().mustPlaySound())
+                        player.playSound(SoundEvents.ITEM_CROP_PLANT, 1.0f, 1.0f);
+                    return super.onUse(state, world, pos, player, hand, hit);
+                } else {
+                    return ReapHelper.reap(state, world, pos, player, hand, Items.NETHER_WART, AGE);
+                }
             }
+        }
         return super.onUse(state, world, pos, player, hand, hit);
     }
 
