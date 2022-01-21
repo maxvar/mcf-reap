@@ -53,7 +53,7 @@ public final class ConfigManager {
     }
 
     public static CompletableFuture<Void> save() {
-        Mod.LOGGER.trace("Saving config file to {}", configPath);
+        Mod.LOGGER.info("Saving config file to {}", configPath);
         return CompletableFuture.runAsync(() -> {
             try (final BufferedWriter writer = Files.newBufferedWriter(configPath)) {
                 GSON.toJson(Optional.ofNullable(config).orElseGet(Config::new), writer);

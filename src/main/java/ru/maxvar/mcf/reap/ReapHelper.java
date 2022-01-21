@@ -28,14 +28,11 @@ public final class ReapHelper {
     public static ActionResult reap(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final Item seedItem, final IntProperty ageProperty) {
         //get loot from the plant block
         //except one seed from the loot
-        Mod.LOGGER.info("just started reap @" + (world.isClient ? "CLIENT" : "SERVER"));
         final List<ItemStack> dropList = Block.getDroppedStacks(state, (ServerWorld) world, pos, null, player, player.getStackInHand(hand));
         final DefaultedList<ItemStack> drops = getDrops(seedItem, dropList);
         //reduce to new plant
-        Mod.LOGGER.info("reducing crop age…");
         world.setBlockState(pos, state.with(ageProperty, 0));
         if (ConfigManager.getConfig().mustCollectToInventory()) {
-            Mod.LOGGER.info("must collect to inventory!");
             //try to put loot into players inventory
             final PlayerInventory playerInventory = player.inventory;
             for (final ItemStack stack : drops) {
@@ -43,10 +40,8 @@ public final class ReapHelper {
                 playerInventory.insertStack(stack);
             }
             drops.removeIf(itemStack -> itemStack.getCount() == 0);
-            Mod.LOGGER.info("done collecting into inventory!");
         }
         //scatter remaining drops
-        Mod.LOGGER.info("scattering remaining items");
         if (!drops.isEmpty()) ItemScatterer.spawn(world, pos, drops);
         return ActionResult.SUCCESS;
     }

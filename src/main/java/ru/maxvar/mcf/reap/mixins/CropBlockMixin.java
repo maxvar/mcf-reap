@@ -43,18 +43,13 @@ public abstract class CropBlockMixin extends PlantBlock {
     @SuppressWarnings("deprecation")
     @Override
     public ActionResult onUse(final BlockState state, final World world, final BlockPos pos, final PlayerEntity player, final Hand hand, final BlockHitResult hit) {
-        Mod.LOGGER.info("onUse @" + (world.isClient ? "CLIENT" : "SERVER"));
-        Mod.LOGGER.info("mod is " + (ConfigManager.getConfig().isEnabled() ? "ENABLED" : "DISABLED"));
         if (ConfigManager.getConfig().isEnabled()) {
             if (isMature(state)) {
-                Mod.LOGGER.info("crop is mature @" + (world.isClient ? "CLIENT" : "SERVER"));
                 if (world.isClient()) {
                     if (ConfigManager.getConfig().mustPlaySound())
-                        Mod.LOGGER.info("playing sound @" + (world.isClient ? "CLIENT" : "SERVER"));
                     player.playSound(SoundEvents.ITEM_CROP_PLANT, 1.0f, 1.0f);
                     return super.onUse(state, world, pos, player, hand, hit);
                 } else {
-                    Mod.LOGGER.info("ready to reap @" + (world.isClient ? "CLIENT" : "SERVER"));
                     return ReapHelper.reap(state, world, pos, player, hand, CropsInfo.getSeedsItem(this).asItem(), getAgeProperty());
                 }
             }
