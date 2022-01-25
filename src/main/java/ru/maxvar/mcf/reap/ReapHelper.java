@@ -44,7 +44,6 @@ public final class ReapHelper {
         //scatter remaining drops
         if (!drops.isEmpty()) ItemScatterer.spawn(world, pos, drops);
         return ActionResult.SUCCESS;
-
     }
 
     @NotNull

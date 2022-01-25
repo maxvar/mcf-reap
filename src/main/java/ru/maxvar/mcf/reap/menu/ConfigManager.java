@@ -1,11 +1,7 @@
 package ru.maxvar.mcf.reap.menu;
 
 import com.google.gson.*;
-import me.shedaniel.clothconfig2.api.ConfigBuilder;
-import me.shedaniel.clothconfig2.api.ConfigEntryBuilder;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.text.Text;
 import ru.maxvar.mcf.reap.Mod;
 
 import java.io.BufferedReader;
@@ -56,8 +52,8 @@ public final class ConfigManager {
         }, EXECUTOR);
     }
 
-    private static CompletableFuture<Void> save() {
-        Mod.LOGGER.trace("Saving config file to {}", configPath);
+    public static CompletableFuture<Void> save() {
+        Mod.LOGGER.info("Saving config file to {}", configPath);
         return CompletableFuture.runAsync(() -> {
             try (final BufferedWriter writer = Files.newBufferedWriter(configPath)) {
                 GSON.toJson(Optional.ofNullable(config).orElseGet(Config::new), writer);
@@ -67,23 +63,4 @@ public final class ConfigManager {
         }, EXECUTOR);
     }
 
-    public static Screen createConfigScreen(final Screen parent) {
-        final Config config = getConfig();
-        final ConfigBuilder builder = ConfigBuilder.create().setParentScreen(parent).setTitle(Text.of(String.format("config.%s.title", Mod.MOD_ID)));
-        builder.getOrCreateCategory(Text.of("general"))
-                .addEntry(ConfigEntryBuilder.create()
-                        .startBooleanToggle(Text.of("Reaping enabled"), config.isEnabled())
-                        .setDefaultValue(true)
-                        .setSaveConsumer(config::setEnabled).build())
-                .addEntry(ConfigEntryBuilder.create()
-                        .startBooleanToggle(Text.of("Collect to inventory"), config.mustCollectToInventory())
-                        .setDefaultValue(true)
-                        .setSaveConsumer(config::setCollectToInventory).build())
-                .addEntry(ConfigEntryBuilder.create()
-                        .startBooleanToggle(Text.of("Play planting sound"), config.mustPlaySound())
-                        .setDefaultValue(true)
-                        .setSaveConsumer(config::setPlaySound).build());
-        builder.setSavingRunnable(ConfigManager::save);
-        return builder.build();
-    }
 }
