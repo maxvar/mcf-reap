@@ -33,7 +33,7 @@ public final class ConfigManager {
 
     private static Config init() {
         if (!Files.exists(configPath)) {
-            Mod.LOGGER.info("Creating config file ({})", configPath::getFileName);
+            Mod.LOGGER.info("Creating config file ({})", configPath.getFileName());
             save().join();
         }
         load().thenApply(o -> config = o).join();

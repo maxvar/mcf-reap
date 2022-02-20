@@ -1,13 +1,13 @@
 package ru.maxvar.mcf.reap;
 
 import net.fabricmc.api.ModInitializer;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @SuppressWarnings("unused")
 public class Mod implements ModInitializer {
     public static final String MOD_ID = "mcf-reap";
-    public static final Logger LOGGER = LogManager.getFormatterLogger(MOD_ID);
+    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     @Override
     public void onInitialize() {
