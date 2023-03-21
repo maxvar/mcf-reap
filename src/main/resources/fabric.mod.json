@@ -30,5 +30,10 @@
     "fabric": "*",
     "minecraft": "${minecraft_version}",
     "java": ">=17"
+  },
+  "custom": {
+    "modmanager": {
+      "modrinth": "s1gPCI9U"
+    }
   }
 }
