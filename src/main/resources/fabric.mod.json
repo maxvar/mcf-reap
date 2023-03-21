@@ -33,7 +33,8 @@
   },
   "custom": {
     "modmanager": {
-      "modrinth": "s1gPCI9U"
+      "modrinth": "s1gPCI9U",
+      "curseforge": 368705
     }
   }
 }
