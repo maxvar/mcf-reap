@@ -55,3 +55,6 @@ jobs:
           github-token: "${{env.GITHUB_TOKEN}}"
           curseforge-token: "${{env.CURSEFORGE_TOKEN}}"
           modrinth-token: "${{env.MODRINTH_TOKEN}}"
+
+          retry-attempts: 5
+          retry-delay: 10000
