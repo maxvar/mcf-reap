@@ -35,6 +35,13 @@
     "modmanager": {
       "modrinth": "s1gPCI9U",
       "curseforge": 368705
+    },
+    "mc-publish": {
+      "modrinth": "s1gPCI9U",
+      "curseforge": 368705,
+      "loaders": [
+        "fabric"
+      ]
     }
   }
 }
